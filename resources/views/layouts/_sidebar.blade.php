@@ -31,6 +31,12 @@
                     <a class="nav-link" href="{{ route('admin.jadwal.tampil') }}"><i class="fas fa-calendar-alt"></i>
                         <span>Jadwal Pelajaran</span></a>
                 </li>
+                
+                <li class="menu-header">Keuangan</li>
+                <li class="{{ request()->routeIs('admin.pembayaran.*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.pembayaran.index') }}"><i
+                            class="fas fa-file-invoice-dollar"></i> <span>Pembayaran</span></a>
+                </li>
 
                 <li class="menu-header">Pengguna</li>
 
@@ -91,6 +97,10 @@
                 <li class="{{ request()->routeIs('siswa.nilai.*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('siswa.nilai.index') }}"><i class="fas fa-star"></i>
                         <span>Nilai</span></a>
+                </li>
+                <li class="{{ request()->routeIs('siswa.pembayaran.*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('siswa.pembayaran.index') }}"><i
+                            class="fas fa-money-bill-wave"></i> <span>Pembayaran</span></a>
                 </li>
             @endif
         </ul>

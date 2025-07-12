@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\JadwalPelajaranController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\PembayaranController;
 use App\Http\Controllers\Guru\MateriController;
 use App\Http\Controllers\Guru\TugasController;
 use App\Http\Controllers\Guru\ProfileController as GuruProfileController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\Siswa\MateriController as SiswaMateriController;
 use App\Http\Controllers\Siswa\TugasController as SiswaTugasController;
 use App\Http\Controllers\Siswa\ProfileController as SiswaProfileController;
 use App\Http\Controllers\Siswa\JadwalPelajaranController as SiswaJadwalPelajaranController;
+use App\Http\Controllers\Siswa\PembayaranController as SiswaPembayaranController;
 use App\Http\Controllers\Siswa\NilaiController;
 
 Route::get('/', function () {
@@ -88,6 +90,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/jadwal-pelajaran/{jadwal_pelajaran}/ubah', [JadwalPelajaranController::class, 'ubahData'])->name('jadwal.ubah');
         Route::put('/jadwal-pelajaran/{jadwal_pelajaran}', [JadwalPelajaranController::class, 'perbaruiData'])->name('jadwal.perbarui');
         Route::delete('/jadwal-pelajaran/{jadwal_pelajaran}', [JadwalPelajaranController::class, 'hapusData'])->name('jadwal.hapus');
+
+        // --- Rute untuk Pengelolaan Pembayaran ---
+        Route::get('/pembayaran', [PembayaranController::class, 'index'])->name('pembayaran.index');
+        Route::put('/pembayaran/{pembayaran}', [PembayaranController::class, 'update'])->name('pembayaran.update');
+        // --- Akhir Rute Pengelolaan Pembayaran ---
 
         // --- Rute untuk Profil Admin ---
         Route::get('/profil', [AdminProfileController::class, 'edit'])->name('profil.edit');
@@ -158,5 +165,10 @@ Route::middleware('auth')->group(function () {
         // --- Rute untuk Nilai Siswa ---
         Route::get('/nilai', [NilaiController::class, 'index'])->name('nilai.index');
         // --- Akhir Rute Nilai Siswa ---
+
+        // --- Rute untuk Pembayaran Siswa ---
+        Route::get('/pembayaran', [SiswaPembayaranController::class, 'index'])->name('pembayaran.index');
+        Route::post('/pembayaran', [SiswaPembayaranController::class, 'store'])->name('pembayaran.store');
+        // --- Akhir Rute Pembayaran Siswa ---
     });
 });
