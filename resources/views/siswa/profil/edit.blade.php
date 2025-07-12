@@ -4,9 +4,6 @@
 
 @section('content')
     <section class="section">
-        <div class="section-header">
-            <h1>Edit Profil</h1>
-        </div>
 
         @if (session('sukses'))
             <div class="alert alert-success alert-dismissible show fade">
