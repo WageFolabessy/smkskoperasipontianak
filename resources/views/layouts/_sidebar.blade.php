@@ -31,7 +31,11 @@
                     <a class="nav-link" href="{{ route('admin.jadwal.tampil') }}"><i class="fas fa-calendar-alt"></i>
                         <span>Jadwal Pelajaran</span></a>
                 </li>
-                
+                <li class="{{ request()->routeIs('admin.alumni.*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.alumni.tampil') }}"><i class="fas fa-user-graduate"></i>
+                        <span>Alumni</span></a>
+                </li>
+
                 <li class="menu-header">Keuangan</li>
                 <li class="{{ request()->routeIs('admin.pembayaran.*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('admin.pembayaran.index') }}"><i

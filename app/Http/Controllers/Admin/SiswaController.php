@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreSiswaRequest;
 use App\Http\Requests\Admin\UpdateSiswaRequest;
+use App\Models\Alumni;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\User;
@@ -113,6 +114,30 @@ class SiswaController extends Controller
             return back()->with('sukses', 'Data siswa berhasil dihapus!');
         } catch (\Exception $e) {
             return back()->with('gagal', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+    }
+
+    public function luluskan(Siswa $siswa)
+    {
+        DB::beginTransaction();
+        try {
+            Alumni::create([
+                'nama_lengkap' => $siswa->user->nama,
+                'nis' => $siswa->nis,
+                'jurusan_id' => $siswa->kelas->jurusan_id,
+                'tahun_lulus' => now()->year,
+                'no_telp' => $siswa->no_telp,
+                'alamat' => $siswa->alamat,
+                'foto' => $siswa->foto,
+            ]);
+
+            $siswa->user->delete();
+
+            DB::commit();
+            return redirect()->route('admin.siswa.tampil')->with('sukses', 'Siswa berhasil diluluskan!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('gagal', 'Terjadi kesalahan saat meluluskan siswa: ' . $e->getMessage());
         }
     }
 }

@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\JadwalPelajaranController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AlumniController;
 use App\Http\Controllers\Admin\PembayaranController;
 use App\Http\Controllers\Guru\MateriController;
 use App\Http\Controllers\Guru\TugasController;
@@ -82,6 +83,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/data-siswa/{siswa}/ubah', [AdminSiswaController::class, 'ubahData'])->name('siswa.ubah');
         Route::put('/data-siswa/{siswa}', [AdminSiswaController::class, 'perbaruiData'])->name('siswa.perbarui');
         Route::delete('/data-siswa/{siswa}', [AdminSiswaController::class, 'hapusData'])->name('siswa.hapus');
+        Route::post('/data-siswa/{siswa}/luluskan', [App\Http\Controllers\Admin\SiswaController::class, 'luluskan'])->name('siswa.luluskan');
+
+        // Alumni
+        Route::get('/data-alumni', [AlumniController::class, 'tampilData'])->name('alumni.tampil');
+        Route::get('/data-alumni/tambah', [AlumniController::class, 'tambahData'])->name('alumni.tambah');
+        Route::post('/data-alumni', [AlumniController::class, 'simpanData'])->name('alumni.simpan');
+        Route::get('/data-alumni/{alumni}/ubah', [AlumniController::class, 'ubahData'])->name('alumni.ubah');
+        Route::put('/data-alumni/{alumni}', [AlumniController::class, 'perbaruiData'])->name('alumni.perbarui');
+        Route::delete('/data-alumni/{alumni}', [AlumniController::class, 'hapusData'])->name('alumni.hapus');
 
         // --- Rute untuk Jadwal Pelajaran ---
         Route::get('/jadwal-pelajaran', [JadwalPelajaranController::class, 'tampilData'])->name('jadwal.tampil');

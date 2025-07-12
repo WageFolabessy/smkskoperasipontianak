@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Data Siswa')
+@section('title', 'Data Alumni')
 
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $('#table-siswa').DataTable();
+            $('#table-alumni').DataTable();
         });
 
         $('.show_confirm').click(function(event) {
@@ -20,23 +20,6 @@
                 })
                 .then((willDelete) => {
                     if (willDelete) {
-                        form.submit();
-                    }
-                });
-        });
-
-        $('.show_confirm_lulus').click(function(event) {
-            var form = $(this).closest("form");
-            event.preventDefault();
-            swal({
-                    title: `Yakin ingin meluluskan siswa ini?`,
-                    text: "Data akan dipindahkan ke tabel alumni dan akun login siswa akan dihapus.",
-                    icon: "info",
-                    buttons: true,
-                    dangerMode: false,
-                })
-                .then((willLulus) => {
-                    if (willLulus) {
                         form.submit();
                     }
                 });
@@ -66,59 +49,54 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
-                    <h4>Daftar Siswa</h4>
+                    <h4>Daftar Alumni</h4>
                     <div class="card-header-action">
-                        <a href="{{ route('admin.siswa.tambah') }}" class="btn btn-primary"><i
-                                class="fas fa-plus"></i>&nbsp; Tambah Siswa</a>
+                        <a href="{{ route('admin.alumni.tambah') }}" class="btn btn-primary"><i
+                                class="fas fa-plus"></i>&nbsp; Tambah Alumni</a>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped" id="table-siswa">
+                        <table class="table table-striped" id="table-alumni">
                             <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Foto</th>
                                     <th>Nama</th>
                                     <th>NIS</th>
-                                    <th>Kelas</th>
+                                    <th>Jurusan</th>
+                                    <th>Tahun Lulus</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($semua_siswa as $siswa)
+                                @foreach ($semua_alumni as $alumni)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
-                                            @if ($siswa->foto)
-                                                <img src="{{ Storage::url($siswa->foto) }}" alt="Foto" width="50"
+                                            @if ($alumni->foto)
+                                                <img src="{{ Storage::url($alumni->foto) }}" alt="Foto" width="50"
                                                     class="img-thumbnail">
                                             @else
                                                 <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" alt="Foto Default"
                                                     width="50">
                                             @endif
                                         </td>
-                                        <td>{{ $siswa->user->nama }}</td>
-                                        <td>{{ $siswa->nis }}</td>
-                                        <td>{{ $siswa->kelas->nama_kelas }}</td>
+                                        <td>{{ $alumni->nama_lengkap }}</td>
+                                        <td>{{ $alumni->nis }}</td>
+                                        <td>{{ $alumni->jurusan->nama_jurusan }}</td>
+                                        <td>{{ $alumni->tahun_lulus }}</td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <a href="{{ route('admin.siswa.ubah', $siswa->id) }}"
+                                                <a href="{{ route('admin.alumni.ubah', $alumni->id) }}"
                                                     class="btn btn-success btn-sm mr-2"><i class="fas fa-edit"></i></a>
-                                                <form method="POST" action="{{ route('admin.siswa.hapus', $siswa->id) }}">
+                                                <form method="POST"
+                                                    action="{{ route('admin.alumni.hapus', $alumni->id) }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-danger btn-sm show_confirm"
                                                         data-toggle="tooltip" title='Hapus'><i
                                                             class="fas fa-trash-alt"></i></button>
-                                                </form>
-                                                <form method="POST"
-                                                    action="{{ route('admin.siswa.luluskan', $siswa->id) }}">
-                                                    @csrf
-                                                    <button type="button"
-                                                        class="btn btn-primary btn-sm ml-2 show_confirm_lulus"
-                                                        data-toggle="tooltip" title='Luluskan Siswa'><i
-                                                            class="fas fa-user-graduate"></i></button>
                                                 </form>
                                             </div>
                                         </td>
